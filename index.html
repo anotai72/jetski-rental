@@ -395,6 +395,43 @@ modal.style.display="none";
 }
 
 </script>
+<script>
+
+function setLang(lang){
+
+const th=document.querySelectorAll(".th");
+
+const en=document.querySelectorAll(".en");
+
+if(lang==="th"){
+
+th.forEach(e=>e.style.display="");
+
+en.forEach(e=>e.style.display="none");
+
+localStorage.setItem("lang","th");
+
+}else{
+
+th.forEach(e=>e.style.display="none");
+
+en.forEach(e=>e.style.display="");
+
+localStorage.setItem("lang","en");
+
+}
+
+}
+
+window.onload=function(){
+
+const lang=localStorage.getItem("lang") || "th";
+
+setLang(lang);
+
+}
+
+</script>
 
 <body>
 
