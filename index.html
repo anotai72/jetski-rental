@@ -554,25 +554,7 @@ Thank you for choosing us ❤️
 </p>
 
 </footer>
-<!-- ========================= -->
-<!-- POPUP YAMAHA EX -->
-<!-- ========================= -->
 
-<div id="exModal" class="modal">
-
-<div class="modal-content">
-
-<span class="close" onclick="closeEX()">&times;</span>
-
-<h2>🟢 Yamaha EX</h2>
-
-<img src="b51c736fd05ddb669ed9e51b9d3e4547.jpeg" style="width:100%;border-radius:15px;">
-
-<!-- ตรงนี้จะเป็นรายละเอียด -->
-
-</div>
-
-</div>
 <!-- ========================= -->
 <!-- POPUP YAMAHA EX -->
 <!-- ========================= -->
@@ -745,6 +727,11 @@ href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Yamah
 <span class="th">รายละเอียด</span>
 <span class="en" style="display:none;">Specifications</span>
 
+<a href="javascript:void(0)" class="detail-btn" onclick="openSea()">
+<span class="th">ดูรายละเอียด</span>
+<span class="en" style="display:none;">View Details</span>
+</a>
+  
 </div>
 
 <ul class="spec-list">
@@ -803,4 +790,84 @@ href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Sea-D
 
 </div>
 </body>
+<script>
+
+function openEX(){
+document.getElementById("exModal").style.display="block";
+}
+
+function closeEX(){
+document.getElementById("exModal").style.display="none";
+}
+
+function openFX(){
+document.getElementById("fxModal").style.display="block";
+}
+
+function closeFX(){
+document.getElementById("fxModal").style.display="none";
+}
+
+function openSea(){
+document.getElementById("seaModal").style.display="block";
+}
+
+function closeSea(){
+document.getElementById("seaModal").style.display="none";
+}
+
+window.onclick=function(event){
+
+let ex=document.getElementById("exModal");
+let fx=document.getElementById("fxModal");
+let sea=document.getElementById("seaModal");
+
+if(event.target==ex){
+ex.style.display="none";
+}
+
+if(event.target==fx){
+fx.style.display="none";
+}
+
+if(event.target==sea){
+sea.style.display="none";
+}
+
+}
+
+</script>
+
+<script>
+
+function setLang(lang){
+
+const th=document.querySelectorAll(".th");
+const en=document.querySelectorAll(".en");
+
+if(lang=="th"){
+
+th.forEach(e=>e.style.display="");
+en.forEach(e=>e.style.display="none");
+
+}else{
+
+th.forEach(e=>e.style.display="none");
+en.forEach(e=>e.style.display="");
+
+}
+
+localStorage.setItem("lang",lang);
+
+}
+
+window.onload=function(){
+
+const lang=localStorage.getItem("lang") || "th";
+
+setLang(lang);
+
+}
+
+</script>
 </html>
