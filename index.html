@@ -301,6 +301,9 @@ border-radius:20px;
 padding:25px;
 animation:fade .3s;
 }
+#bookingModal{
+z-index:9999;
+}
 
 @keyframes fade{
 from{transform:translateY(30px);opacity:0;}
@@ -936,14 +939,18 @@ let price60=0;
 
 function openBooking(model,p30,p60){
 
+// ปิดหน้ารายละเอียดทั้งหมดก่อน
+closeEX();
+closeFX();
+closeSea();
+
 currentModel=model;
-
 price30=p30;
-
 price60=p60;
 
 document.getElementById("bookingModel").value=model;
 
+// เปิดหน้าจอง
 document.getElementById("bookingModal").style.display="block";
 
 updatePrice();
