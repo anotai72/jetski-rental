@@ -330,6 +330,42 @@ font-weight:bold;
 .book-btn:hover{
 opacity:.9;
 }
+.booking-form{
+margin-top:20px;
+}
+
+.booking-form label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+.booking-form input,
+.booking-form select{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+}
+
+.submit-book{
+margin-top:20px;
+width:100%;
+padding:15px;
+background:#06C755;
+color:white;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.submit-book:hover{
+opacity:.9;
+}
 </style>
 
 </head>
@@ -560,6 +596,67 @@ Thank you for choosing us ❤️
 </p>
 
 </footer>
+<!-- ================= BOOKING FORM ================= -->
+
+<div id="bookingModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeBooking()">&times;</span>
+
+<h2>📋 แบบฟอร์มจอง</h2>
+
+<div class="booking-form">
+
+<label>ชื่อลูกค้า</label>
+<input type="text" id="customerName">
+
+<label>เบอร์โทร</label>
+<input type="tel" id="customerPhone">
+
+<label>วันที่จอง</label>
+<input type="date" id="bookingDate">
+
+<label>เวลา</label>
+<input type="time" id="bookingTime">
+
+<label>ระยะเวลา</label>
+
+<select id="bookingDuration" onchange="updatePrice()">
+
+<option value="30">30 นาที</option>
+
+<option value="60">1 ชั่วโมง</option>
+
+</select>
+
+<label>รุ่นเจ็ทสกี</label>
+
+<input type="text" id="bookingModel" readonly>
+
+<label>ราคารวม</label>
+
+<input type="text" id="bookingPrice" readonly>
+
+<label>มัดจำ</label>
+
+<input type="text" value="500 บาท" readonly>
+
+<label>ชำระหน้างาน</label>
+
+<input type="text" id="remainPrice" readonly>
+
+<button class="submit-book" onclick="sendBooking()">
+
+ยืนยันการจองผ่าน LINE
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <!-- ========================= -->
 <!-- POPUP YAMAHA EX -->
@@ -627,11 +724,15 @@ Thank you for choosing us ❤️
 
 </div>
 
-<a class="book-btn"
-href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Yamaha EX%0A%0ADate:%0ATime:%0ADuration:%0ANumber of Riders:%0AName:%0APhone:">
+<a href="javascript:void(0)"
+class="book-btn"
+onclick="openBooking('Yamaha EX',1000,2000)">
 
-<span class="th">💬 จอง Yamaha EX ผ่าน LINE</span>
-<span class="en" style="display:none;">💬 Book Yamaha EX via LINE</span>
+<span class="th">💬 จอง Yamaha EX</span>
+
+<span class="en" style="display:none;">
+💬 Book Yamaha EX
+</span>
 
 </a>
 
@@ -702,12 +803,17 @@ href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Yamah
 
 </div>
 
-<a class="book-btn"
-href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Yamaha FX%0A%0ADate:%0ATime:%0ADuration:%0ANumber of Riders:%0AName:%0APhone:">
+<a href="javascript:void(0)"
+class="book-btn"
+onclick="openBooking('Yamaha FX',2700,2700)">
 
-<span class="th">💬 จอง Yamaha FX ผ่าน LINE</span>
+<span class="th">
+💬 จอง Yamaha FX
+</span>
 
-<span class="en" style="display:none;">💬 Book Yamaha FX via LINE</span>
+<span class="en" style="display:none;">
+💬 Book Yamaha FX
+</span>
 
 </a>
 
@@ -781,12 +887,17 @@ href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Yamah
 
 </div>
 
-<a class="book-btn"
-href="https://line.me/ti/p/v44wTtSK4p?text=Hello%0A%0AI would like to book Sea-Doo RXT 300 RS%0A%0ADate:%0ATime:%0ADuration:%0ANumber of Riders:%0AName:%0APhone:">
+<a href="javascript:void(0)"
+class="book-btn"
+onclick="openBooking('Sea-Doo RXT300RS',1600,3200)">
 
-<span class="th">💬 จอง Sea-Doo RXT 300 RS ผ่าน LINE</span>
+<span class="th">
+💬 จอง Sea-Doo RXT300RS
+</span>
 
-<span class="en" style="display:none;">💬 Book Sea-Doo RXT 300 RS via LINE</span>
+<span class="en" style="display:none;">
+💬 Book Sea-Doo RXT300RS
+</span>
 
 </a>
 
@@ -819,7 +930,124 @@ document.getElementById("seaModal").style.display="block";
 function closeSea(){
 document.getElementById("seaModal").style.display="none";
 }
+let currentModel="";
+let price30=0;
+let price60=0;
 
+function openBooking(model,p30,p60){
+
+currentModel=model;
+
+price30=p30;
+
+price60=p60;
+
+document.getElementById("bookingModel").value=model;
+
+document.getElementById("bookingModal").style.display="block";
+
+updatePrice();
+
+}
+
+function closeBooking(){
+
+document.getElementById("bookingModal").style.display="none";
+
+}
+
+function updatePrice(){
+
+let d=document.getElementById("bookingDuration").value;
+
+let total=d=="30"?price30:price60;
+
+let remain=total-500;
+
+document.getElementById("bookingPrice").value=total+" บาท";
+
+document.getElementById("remainPrice").value=remain+" บาท";
+
+}
+function sendBooking(){
+
+let name=document.getElementById("customerName").value;
+let phone=document.getElementById("customerPhone").value;
+let date=document.getElementById("bookingDate").value;
+let time=document.getElementById("bookingTime").value;
+let duration=document.getElementById("bookingDuration").value;
+
+let total=(duration=="30")?price30:price60;
+let remain=total-500;
+
+let durationText=(duration=="30")?"30 นาที":"1 ชั่วโมง";
+
+let text=
+"ชื่อลูกค้า : "+name+"\n"+
+"จองผ่าน : เว็บไซต์\n"+
+"เบอร์โทร : "+phone+"\n\n"+
+
+"📌 รายละเอียดการจองเจ็ทสกี\n\n"+
+
+"วันที่จอง : "+date+"\n"+
+"เวลา : "+time+"\n"+
+"ระยะเวลา : "+durationText+"\n\n"+
+
+"รุ่นเจ็ทสกี\n"+
+currentModel+" — "+total.toLocaleString()+" บาท\n"+
+"ระยะเวลาเช่า "+durationText+"\n"+
+"เป็นเงิน : "+total.toLocaleString()+" บาท\n\n"+
+
+"————————————\n"+
+
+"💰 การชำระเงิน\n"+
+"• มัดจำ : 500 บาท\n"+
+"• ชำระหน้างาน : "+remain.toLocaleString()+" บาท\n\n"+
+
+"โอนเงินมัดจำเข้าบัญชี\n"+
+"• ธนาคาร : กสิกรไทย\n"+
+"• เลขบัญชี : 124-323-8915\n"+
+"• ชื่อบัญชี : นายอโณทัย เทียมที\n\n"+
+
+"กรุณาส่งสลิปโอนเงินเพื่อยืนยันการจอง\n\n"+
+
+"————————————\n\n"+
+
+"📋 เงื่อนไขการจอง\n\n"+
+
+"1. การจองจะสมบูรณ์เมื่อได้รับมัดจำเรียบร้อยแล้ว\n"+
+"2. กรุณามาถึงก่อนเวลานัดอย่างน้อย 15 นาที\n"+
+"3. ผู้เช่าต้องมีอายุ 20 ปีขึ้นไป\n"+
+"4. ผู้ขับต้องขับขี่อย่างปลอดภัยและปฏิบัติตามกฎหมาย\n"+
+"5. ต้องปฏิบัติตามคำแนะนำของเจ้าหน้าที่\n"+
+"6. หากมาช้าจะนับเวลาเช่าตามเวลาที่จอง\n\n"+
+
+"————————————\n\n"+
+
+"❌ เงื่อนไขการยกเลิก / เลื่อน\n\n"+
+
+"• แจ้งล่วงหน้าไม่น้อยกว่า 24 ชั่วโมง\n"+
+"➜ เก็บเป็นเครดิตเลื่อนวันได้\n\n"+
+
+"• แจ้งน้อยกว่า 24 ชั่วโมง\n"+
+"➜ ไม่คืนเงินมัดจำ\n\n"+
+
+"• กรณีสภาพอากาศไม่เอื้ออำนวย\n"+
+"➜ สามารถเลื่อนวันใช้งานได้\n\n"+
+
+"❌ ไม่คืนเงินมัดจำ\n\n"+
+
+"————————————\n\n"+
+
+"📍 สถานที่ให้บริการ\n"+
+"https://maps.app.goo.gl/F6EPn7SrUVkiySn99?g_st=ic";
+
+window.open(
+"https://line.me/R/share?text="+encodeURIComponent(text),
+"_blank"
+);
+
+}
 window.onclick=function(event){
 
 let ex=document.getElementById("exModal");
