@@ -1047,15 +1047,12 @@ currentModel+" — "+total.toLocaleString()+" บาท\n"+
 "📍 สถานที่ให้บริการ\n"+
 "https://maps.app.goo.gl/F6EPn7SrUVkiySn99?g_st=ic";
 
-let lineURL =
-"https://line.me/ti/p/v44wTtSK4p";
-
 window.open(
-lineURL+"?text="+encodeURIComponent(text),
+"https://line.me/R/share?text="+encodeURIComponent(text),
 "_blank"
 );
-
 }
+  
 window.onclick=function(event){
 
 let ex=document.getElementById("exModal");
