@@ -937,23 +937,45 @@ let currentModel="";
 let price30=0;    
 let price60=0;    
     
-function openBooking(model,p30,p60){    
-    
-document.getElementById("exModal").style.display="none";    
-document.getElementById("fxModal").style.display="none";    
-document.getElementById("seaModal").style.display="none";    
-    
-currentModel=model;    
-price30=p30;    
-price60=p60;    
-    
-document.getElementById("bookingModel").value=model;    
-    
-document.getElementById("bookingModal").style.display="block";    
-    
-updatePrice();    
-    
-}    
+function openBooking(model,p30,p60){
+
+document.getElementById("exModal").style.display="none";
+document.getElementById("fxModal").style.display="none";
+document.getElementById("seaModal").style.display="none";
+
+currentModel=model;
+price30=p30;
+price60=p60;
+
+document.getElementById("bookingModel").value=model;
+
+
+// เปลี่ยนตัวเลือกระยะเวลา
+let duration = document.getElementById("bookingDuration");
+
+if(model=="Yamaha FX"){
+
+duration.innerHTML =
+`
+<option value="60">1 ชั่วโมง</option>
+`;
+
+}else{
+
+duration.innerHTML =
+`
+<option value="30">30 นาที</option>
+<option value="60">1 ชั่วโมง</option>
+`;
+
+}
+
+
+document.getElementById("bookingModal").style.display="block";
+
+updatePrice();
+
+}
     
 function closeBooking(){    
     
