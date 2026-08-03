@@ -1061,8 +1061,11 @@ window.open(
 
 alert("ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาคัดลอกข้อความเอง");
 
+let lineURL =
+"https://line.me/R/share?text=";
+
 window.open(
-"https://line.me/ti/p/v44wTtSK4p",
+lineURL + encodeURIComponent(text),
 "_blank"
 );
 
